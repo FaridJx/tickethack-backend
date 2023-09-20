@@ -4,7 +4,7 @@ const moment = require('moment')
 const Trip = require('../models/trips')
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
+router.get('/trips', (req, res, next) => {
   Trip.find().then(data => {
     res.json({trips: data})
   })
