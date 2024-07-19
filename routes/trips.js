@@ -23,14 +23,27 @@ router.post('/selec', (req, res) => {
     }
 
     Trip.find({departure: req.body.departure, arrival: req.body.arrival}).then(data => {
-        // data.date = moment(data.date).format('YYYY');
-        if(data && data.length > 0){
-            data.forEach(trip => {
-                trip.date = moment(trip.date).format('YYYY');
-            });
-            res.json({data})
-        } else{
-            res.json({result: false, error: `Ce trajet n'est pas disponible`})
+        console.log(data.date = moment(data.date).format('YYYY'))
+        // if(data && data.length > 0){
+        //     data.forEach(trip => {
+        //         trip.date = moment(trip.date).format('YYYY');
+        //     });
+        //     res.json({data})
+        // } else{
+        //     res.json({result: false, error: `Ce trajet n'est pas disponible`})
+        // }
+        if (data && data.length > 0) {
+            // Formatez les dates dans le format souhaité (par exemple, 'YYYY-MM-DD')
+            const formattedData = data.map(trip => ({
+                departure: trip.departure,
+                arrival: trip.arrival,
+                date: moment(trip.date).format('YYYY-MM-DD'), // Remplacez 'YYYY-MM-DD' par le format désiré
+                price: trip.price,
+            }));
+
+            res.json({ data: formattedData });
+        } else {
+            res.json({ result: false, error: `Ce trajet n'est pas disponible` });
         }
     })
 
