@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const moment = require('moment')
+moment.locale('fr')
 const Trip = require('../models/trips')
 
 /* GET users listing. */
@@ -17,13 +18,17 @@ router.get('/', (req, res, next) => {
 // })
 
 router.post('/selec', (req, res) => {
-    if(!req.body.departure || !req.body.arrival){
+    if(!req.body.departure || !req.body.arrival || !req.body.date ){
         res.json({result: false, error: 'Il manque un élément'})
         return
     }
 
-    Trip.find({departure: req.body.departure, arrival: req.body.arrival}).then(data => {
-        console.log(data.date = moment(data.date).format('YYYY'))
+    const inputDate = new Date(req.body.date); 
+    const nextDay = new Date(inputDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    Trip.find({departure: req.body.departure, arrival: req.body.arrival, date: { $gte: inputDate, $lt: nextDay}}).then(data => {
+        // console.log(data.date = moment(data.date).format('YYYY-MM-DD'))
         // if(data && data.length > 0){
         //     data.forEach(trip => {
         //         trip.date = moment(trip.date).format('YYYY');
@@ -37,7 +42,7 @@ router.post('/selec', (req, res) => {
             const formattedData = data.map(trip => ({
                 departure: trip.departure,
                 arrival: trip.arrival,
-                date: moment(trip.date).format('YYYY-MM-DD'), // Remplacez 'YYYY-MM-DD' par le format désiré
+                date: moment(trip.date).format('LLL'), // Remplacez 'YYYY-MM-DD' par le format désiré
                 price: trip.price,
             }));
 
