@@ -29,4 +29,20 @@ router.post('/new', (req, res) => {
 })
 
 
+router.delete('/delete', (req, res) => {
+    if(!req.body.departure || !req.body.arrival || !req.body.date){
+      res.json({result: false, error: 'Il manque un élément'})
+      return
+    }
+
+
+    Cart.deleteOne({departure: req.body.departure, arrival: req.body.arrival, date: req.body.date})
+    .then(() => {
+      Cart.find().then(data => {
+        console.log(data);
+      });
+     
+     })
+})
+
 module.exports = router
