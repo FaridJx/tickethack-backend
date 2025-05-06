@@ -45,4 +45,15 @@ router.delete('/delete', (req, res) => {
      })
 })
 
+
+router.delete('/deleteAll', (req, res) => {
+    Cart.deleteMany({})
+    .then(() => {
+      Cart.find().then(data => {
+        console.log(data);
+      });
+     
+     })
+})
+
 module.exports = router

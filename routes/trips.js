@@ -24,7 +24,12 @@ router.post('/selec', (req, res) => {
     }
 
     const inputDate = new Date(req.body.date); 
+    
+    console.log(inputDate);
+    
     const nextDay = new Date(inputDate);
+    console.log(nextDay);
+    
     nextDay.setDate(nextDay.getDate() + 1);
 
     Trip.find({departure: req.body.departure, arrival: req.body.arrival, date: { $gte: inputDate, $lt: nextDay}}).then(data => {
