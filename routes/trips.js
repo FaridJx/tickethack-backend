@@ -23,12 +23,12 @@ router.post('/selec', (req, res) => {
         return
     }
 
-    const inputDate = new Date(req.body.date); 
     
-    console.log(inputDate);
+    const inputDate = moment(req.body.date).format('YYYY-MM-DD 00:00:00');
+    // inputDate = new Date(inputDate); 
     
     const nextDay = new Date(inputDate);
-    console.log(nextDay);
+    // console.log(nextDay);
     
     nextDay.setDate(nextDay.getDate() + 1);
 
