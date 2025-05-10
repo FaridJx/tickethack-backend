@@ -22,13 +22,10 @@ router.post('/selec', (req, res) => {
         res.json({result: false, error: 'Il manque un élément'})
         return
     }
-
     
     const inputDate = moment(req.body.date).format('YYYY-MM-DD 00:00:00');
-    // inputDate = new Date(inputDate); 
     
     const nextDay = new Date(inputDate);
-    // console.log(nextDay);
     
     nextDay.setDate(nextDay.getDate() + 1);
 

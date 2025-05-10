@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bookingSchema = mongoose.Schema({
     departure: String,
     arrival: String,
-    date: Date,
+    date: Object,
     price: Number
 })
 

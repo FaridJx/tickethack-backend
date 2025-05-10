@@ -8,6 +8,7 @@ require('./models/connexion')
 var indexRouter = require('./routes/index');
 var tripsRouter = require('./routes/trips');
 var cartsRouter = require('./routes/cart');
+var bookingsRouter = require('./routes/booking');
 
 
 var app = express();
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/trips', tripsRouter);
 app.use('/cart', cartsRouter);
+app.use('/booking', bookingsRouter);
 
 
 module.exports = app;
