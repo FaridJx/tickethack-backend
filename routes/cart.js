@@ -15,16 +15,23 @@ router.post('/new', (req, res) => {
         return
     }
 
-    const newCart = new Cart({
-        departure: req.body.departure,
-        arrival: req.body.arrival,
-        date: req.body.date,
-        price: req.body.price
-    });
-
-    newCart.save().then(data => {
-        res.json({ data: data });
-      });
+    Cart.findOne({departure: req.body.departure, arrival: req.body.arrival, date: req.body.date, price: req.body.price})
+    .then(data => {
+      if(data === null){
+        const newCart = new Cart({
+            departure: req.body.departure,
+            arrival: req.body.arrival,
+            date: req.body.date,
+            price: req.body.price
+        });
+    
+        newCart.save().then(data => {
+            res.json({ result: true, data: data });
+          });
+      } else {
+        res.json({ result: false, error: 'Le trajet à déjà été ajouté au panier' });
+      }
+    })
 })
 
 
